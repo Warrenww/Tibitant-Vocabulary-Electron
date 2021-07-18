@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react';
 import { Button } from 'antd';
-
-interface WindowsExtend extends Window {
-  api?: {
-    send: (channel: string, data: any) => void;
-    on: (channel: string) => Promise<unknown>;
-  };
-};
+import { getData } from './API';
+import { AppContainer } from './styles';
+import VocabTable from './VocabTable';
+import Tibetan from '../Utils/Tibetan';
 
 const App = () => {
   useEffect(() => {
-      const api = (window as WindowsExtend).api;
-      api.send('request', 'test');
-      api.on('response').then((res) => console.log(res));
+    document.getElementById('loading').remove();
+    getData(0);
+    console.log(new Tibetan('sa').toString());
   }, []);
 
   return (
-    <>
+    <AppContainer>
       <Button>
         Click
       </Button>
-    </>
+      <VocabTable />
+    </AppContainer>
   );
 }
 

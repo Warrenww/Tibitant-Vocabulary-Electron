@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "rebuild": "electron-rebuild  -f -w  sqlite3"
   },
   "keywords": [],
   "author": {
@@ -75,6 +76,8 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
+    "@types/sqlite3": "^3.1.7",
+    "@types/styled-components": "^5.1.11",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "css-loader": "^5.0.0",
@@ -91,6 +94,8 @@
     "antd": "^4.16.7",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sqlite3": "^5.0.2",
+    "styled-components": "^5.3.0"
   }
 }
