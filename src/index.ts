@@ -75,8 +75,28 @@ const getData = async (page: number) => {
   });
 };
 
+const search = async (keyword: string) => {
+  return new Promise((resolve, reject) => {
+    database.all(`
+      select * from vocabulary join vocabulary_info as info
+      on info.vocabulary_id = vocabulary.id
+      where vocabulary.vocabulary like '${keyword}%'
+      order by page
+    `, (err, rows) => {
+      if (err) reject(err);
+      else resolve(rows);
+    });
+  });
+};
+
 ipcMain.on('getData', async (event, arg) => {
   const page = arg?.page ?? 0;
   const data = await getData(page);
   event.reply('getData', data);
-})
+});
+
+ipcMain.on('search', async (event, arg) => {
+  const keyword = arg?.keyword ?? '';
+  const data = await search(keyword);
+  event.reply('searchResult', data);
+});

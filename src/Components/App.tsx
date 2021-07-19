@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
-import { getData } from './API';
+import { getData, search } from './API';
 import { AppContainer } from './styles';
+import Search from './Search';
 import VocabTable, { DataType } from './VocabTable';
 
 
@@ -10,7 +10,7 @@ const App = () => {
   const [page, setPage] = useState(0);
   useEffect(() => {
     document.getElementById('loading').remove();
-    loadMore();
+    // loadMore();
   }, []);
 
   const loadMore = () => {
@@ -19,13 +19,18 @@ const App = () => {
       setData(tmp.concat(d as DataType));
       setPage(page + 1);
     });
-  }
+  };
+
+  const handleSearch = (keyword: string) => {
+    if (keyword === '') return setData([]);
+    search(keyword).then((d) => {
+      setData(d as DataType[]);
+    });
+  };
 
   return (
     <AppContainer>
-      <Button onClick={loadMore}>
-        Load More
-      </Button>
+      <Search search={handleSearch}/>
       <VocabTable
         data={data}
       />

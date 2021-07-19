@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const TibetanText = styled.div<{ small?: boolean; }>`
+export const TibetanText = styled.div<{
+   small?: boolean;
+   valid?: boolean;
+ }>`
   display: inline-block;
   font-size: ${props => props.small ? 2 : 3}em;
   line-height: 1;
