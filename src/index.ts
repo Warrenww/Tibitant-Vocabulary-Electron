@@ -67,7 +67,7 @@ const getData = async (page: number) => {
   return new Promise((resolve, reject) => {
     database.all(`
       select * from vocabulary join vocabulary_info as info
-      on info.vocabulary_id = vocabulary.id LIMIT ${PAGE_SIZE} offset ${PAGE_SIZE * page}
+      on info.vocabulary_id = vocabulary.id order by page LIMIT ${PAGE_SIZE} offset ${PAGE_SIZE * page}
     `, (err, rows) => {
       if (err) reject(err);
       else resolve(rows);
