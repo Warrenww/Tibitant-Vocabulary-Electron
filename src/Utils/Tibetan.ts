@@ -219,7 +219,7 @@ export default class Tibetan {
 export const parser = (s: string) => {
   const r = s.split(' ').map(x => x.trim());
   const arr = r.map(x => {
-    return x.split('-').map(y => new Tibetan('').parse(y)).join('')
+    return x.split('-').map(y => new Tibetan(y).toString()).join('')
   });
   return arr.join(String.fromCharCode(0xf0b));
 }

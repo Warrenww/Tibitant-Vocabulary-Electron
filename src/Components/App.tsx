@@ -3,13 +3,12 @@ import { Button } from 'antd';
 import { getData } from './API';
 import { AppContainer } from './styles';
 import VocabTable from './VocabTable';
-import Tibetan from '../Utils/Tibetan';
+import Tibetan from './Tibetan';
 
 const App = () => {
   useEffect(() => {
     document.getElementById('loading').remove();
     getData(0);
-    console.log(new Tibetan('sa').toString());
   }, []);
 
   return (
@@ -18,6 +17,7 @@ const App = () => {
         Click
       </Button>
       <VocabTable />
+      <Tibetan source={'sa'}/>
     </AppContainer>
   );
 }
