@@ -9,7 +9,7 @@ import {
 import { LinkOutlined } from '@ant-design/icons';
 import { TibetanText } from '../Tibetan/styles';
 import { parser } from '../../Utils/Tibetan';
-import { PosSelect } from '../SubmitModal';
+import PosSelect from '../SubmitModal/PosSelect';
 import Tibetan from '../Tibetan';
 import { DataType } from '.';
 

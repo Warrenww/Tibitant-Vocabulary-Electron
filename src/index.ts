@@ -25,9 +25,12 @@ const createWindow = (): void => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.maximize();
+  mainWindow.setMenuBarVisibility(false);
+
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -99,4 +102,9 @@ ipcMain.on('search', async (event, arg) => {
   const keyword = arg?.keyword ?? '';
   const data = await search(keyword);
   event.reply('searchResult', data);
+});
+
+ipcMain.on('create', async (event, arg) => {
+  console.log(arg);
+  event.reply('searchResult', []);
 });

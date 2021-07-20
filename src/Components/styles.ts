@@ -4,13 +4,14 @@ import { Form } from 'antd';
 export const AppContainer = styled.div`
   background-color: #282c34;
   min-height: 100vh;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   text-align: center;
+  justify-content: flex-start;
 `;
 
 export const Container = styled.div`
@@ -30,7 +31,7 @@ export const DropArea = styled.div`
 `;
 
 export const SettingForm = styled(Form)<&{
-  $maxWidth?: number; 
+  $maxWidth?: number;
 }>`
   width: 100%;
   max-width: ${(props) => props.$maxWidth ?? 720}px;

@@ -6,10 +6,14 @@ const TibetanDisplay = ({
   source,
   preview,
   small,
+  marginVertical,
+  marginHorizental,
 }: {
   source: string;
   preview?: boolean;
   small?: boolean;
+  marginVertical?: number;
+  marginHorizental?: number;
 }) => {
   const [previewText, setPreviewText] = useState(null);
   const [valid, setValid] = useState(true);
@@ -33,7 +37,11 @@ const TibetanDisplay = ({
   }, [source, preview]);
 
   return (
-    <TibetanText small={small} valid>
+    <TibetanText
+      small={small}
+      valid
+      margin={[marginVertical, marginHorizental]}
+    >
       {previewText ?? parser(source)}
     </TibetanText>
   )

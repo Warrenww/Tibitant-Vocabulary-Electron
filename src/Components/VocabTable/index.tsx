@@ -31,6 +31,7 @@ const VocabTable = ({
     <Table
       columns={columns}
       dataSource={data}
+      rowKey={(record: DataType) => record.id}
     />
   );
 };
