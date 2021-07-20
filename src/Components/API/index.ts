@@ -1,5 +1,5 @@
 import socket from './socket';
-import { CreateVocabDto } from '../SubmitModal';
+import { CreateVocabDto } from '../../Utils/interface';
 
 export const getData = async (page: number) => {
   socket.send('getData', { page });

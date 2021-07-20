@@ -15,22 +15,7 @@ import Tibetan from '../Tibetan';
 import PosSelect from './PosSelect';
 import FormInputWithPreview from './FormInputWithPreview';
 import { createVocab } from '../API';
-
-interface VocabWithPage {
-  vocabulary?: string;
-  page?: number;
-}
-
-export interface CreateVocabDto {
-  tibetan: string;
-  translation: string;
-  page?: number;
-  part_of_speech_id?: number;
-  transitive?: boolean;
-  past?: VocabWithPage;
-  future?: VocabWithPage;
-  imperative?: VocabWithPage;
-}
+import { CreateVocabDto } from '../../Utils/interface';
 
 const SubmitModal = ({
   initialTibetan,

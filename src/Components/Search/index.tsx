@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Container } from './styles';
@@ -6,23 +6,26 @@ import Tibetan from '../Tibetan';
 
 const Search = ({
   search,
+  searching,
+  setSearching,
 }: {
-  search: (keyword: string) => void;
+  search:(keyword: string) => void;
+  searching: string;
+  setSearching: (keyword: string) => void;
 }) => {
-  const [value, setValue] = useState('');
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setValue(e.target.value);
     search(e.target.value);
+    setSearching(e.target.value);
   };
 
   return (
     <Container>
       <Input
-        value={value}
+        value={searching}
         onChange={handleChange}
         prefix={<SearchOutlined />}
-        suffix={<Tibetan source={value} preview small/>}
+        suffix={<Tibetan source={searching} preview small/>}
+        allowClear
       />
     </Container>
   );

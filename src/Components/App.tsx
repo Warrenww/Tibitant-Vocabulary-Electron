@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getData, search } from './API';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
+import { search } from './API';
 import { AppContainer } from './styles';
 import Search from './Search';
 import VocabTable, { DataType } from './VocabTable';
@@ -8,34 +12,35 @@ import socket from './API/socket';
 
 const App = () => {
   const [data, setData] = useState<DataType[]>([]);
-  const [page, setPage] = useState(0);
   const [searching, setSearching] = useState('');
+  const searchCoolDown = useRef(false);
+
   useEffect(() => {
     document.getElementById('loading').remove();
-    // loadMore();
-    socket.on('searchResult').then((d) => {
-      console.log(d);
+    socket.on('insertResult').then((d) => {
       setData(d as DataType[]);
+      setSearching((d as DataType[])[0].vocabulary);
     });
   }, []);
-
-  const loadMore = () => {
-    getData(page).then((d) => {
-      const tmp = [...data];
-      setData(tmp.concat(d as DataType));
-      setPage(page + 1);
-    });
-  };
 
   const handleSearch = (keyword: string) => {
     if (keyword === '') return setData([]);
     setSearching(keyword);
-    search(keyword);
+    if (searchCoolDown.current) return;
+    searchCoolDown.current = true;
+    search(keyword).then((d) => setData(d as DataType[]));
+    setTimeout(() => {
+      searchCoolDown.current = false;
+    }, 300);
   };
 
   return (
     <AppContainer>
-      <Search search={handleSearch}/>
+      <Search
+        searching={searching}
+        setSearching={(keyword) => setSearching(keyword)}
+        search={handleSearch}
+      />
       <SubmitModal initialTibetan={searching}/>
       <VocabTable
         data={data}
