@@ -42,9 +42,9 @@ const SubmitModal = ({
 
   const handleSubmit = async () => {
     const rows = await form.validateFields();
-    console.log(rows);
-    createVocab(rows);
+    await createVocab(rows);
     setVisible(false);
+    form.resetFields();
   };
 
   return (
@@ -74,6 +74,7 @@ const SubmitModal = ({
             tibetanValue={initialTibetan}
             required
           />
+          <PosSelect />
           <Form.Item
             label="Chinese"
             name="translation"
@@ -87,7 +88,6 @@ const SubmitModal = ({
           >
             <InputNumber />
           </Form.Item>
-          <PosSelect />
           <Form.Item shouldUpdate noStyle>
           {
             () => form.getFieldValue('part_of_speech_id') === 1 && (

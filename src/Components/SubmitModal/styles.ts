@@ -3,8 +3,8 @@ import { Button } from 'antd';
 
 export const TriggerButton = styled(Button)`
   position: fixed;
-  bottom: 1em;
-  right: 1em;
+  bottom: 2em;
+  right: 2em;
   width: 3em;
   height: 3em;
 

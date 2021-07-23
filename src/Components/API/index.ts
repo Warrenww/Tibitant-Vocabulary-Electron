@@ -15,4 +15,5 @@ export const search = async (keyword: string) => {
 
 export const createVocab = async (data: CreateVocabDto) => {
   socket.send('create', { data });
+  await socket.on('insertResult');
 }

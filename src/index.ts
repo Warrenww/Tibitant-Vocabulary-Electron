@@ -118,7 +118,7 @@ const getVocabFromTibetan = (tibetan: string) => new Promise<Vocabulary[]>(
 const updateVocab = (id: number, page: number) => new Promise<void>(
   (resolve) => database.exec(
     `UPDATE vocabulary SET page=${page} WHERE id=${id}`,
-    () => resolve(),
+    (err) => err ? console.log(err) : resolve(),
 ));
 
 const createVocab = (tibetan: string, page: number | null) => new Promise<number>(

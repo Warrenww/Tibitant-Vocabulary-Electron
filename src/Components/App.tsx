@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useState,
-  useRef,
 } from 'react';
 import { search } from './API';
 import { AppContainer } from './styles';
@@ -13,7 +12,6 @@ import socket from './API/socket';
 const App = () => {
   const [data, setData] = useState<DataType[]>([]);
   const [searching, setSearching] = useState('');
-  const searchCoolDown = useRef(false);
 
   useEffect(() => {
     document.getElementById('loading').remove();
@@ -26,12 +24,7 @@ const App = () => {
   const handleSearch = (keyword: string) => {
     if (keyword === '') return setData([]);
     setSearching(keyword);
-    if (searchCoolDown.current) return;
-    searchCoolDown.current = true;
     search(keyword).then((d) => setData(d as DataType[]));
-    setTimeout(() => {
-      searchCoolDown.current = false;
-    }, 300);
   };
 
   return (
