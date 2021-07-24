@@ -3,19 +3,15 @@ import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Container } from './styles';
 import Tibetan from '../Tibetan';
+import { useStore } from 'effector-react';
+import { $store, setSearching, searchFx } from '../effector';
 
-const Search = ({
-  search,
-  searching,
-  setSearching,
-}: {
-  search:(keyword: string) => void;
-  searching: string;
-  setSearching: (keyword: string) => void;
-}) => {
+const Search = () => {
+  const { searching } = useStore($store);
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    search(e.target.value);
-    setSearching(e.target.value);
+    const keyword = e.target.value;
+    setSearching(keyword);
+    if(keyword) searchFx(keyword);
   };
 
   return (

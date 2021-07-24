@@ -2,16 +2,17 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { search } from './API';
 import { AppContainer } from './styles';
 import Search from './Search';
-import VocabTable, { DataType } from './VocabTable';
+import VocabTable from './VocabTable';
+import { DataType } from './effector';
 import SubmitModal from './SubmitModal';
 import socket from './API/socket';
+import { setSearching } from './effector';
+
 
 const App = () => {
   const [data, setData] = useState<DataType[]>([]);
-  const [searching, setSearching] = useState('');
 
   useEffect(() => {
     document.getElementById('loading').remove();
@@ -21,23 +22,11 @@ const App = () => {
     });
   }, []);
 
-  const handleSearch = (keyword: string) => {
-    if (keyword === '') return setData([]);
-    setSearching(keyword);
-    search(keyword).then((d) => setData(d as DataType[]));
-  };
-
   return (
     <AppContainer>
-      <Search
-        searching={searching}
-        setSearching={(keyword) => setSearching(keyword)}
-        search={handleSearch}
-      />
-      <SubmitModal initialTibetan={searching}/>
-      <VocabTable
-        data={data}
-      />
+      <Search/>
+      <SubmitModal />
+      <VocabTable />
     </AppContainer>
   );
 }

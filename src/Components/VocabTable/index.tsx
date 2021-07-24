@@ -3,26 +3,12 @@ import {
   Table,
 } from 'antd';
 import createColumns from './createColumns';
+import { DataType } from '../effector';
+import { useStore } from 'effector-react';
+import { $store } from '../effector';
 
-export interface DataType {
-  future: number | null;
-  id: number;
-  imperative: boolean | null;
-  link: number | null;
-  page: number | null;
-  part_of_speech_id: number;
-  past: number | null;
-  transitive: boolean | null;
-  translation: string;
-  vocabulary: string;
-  vocabulary_id: string;
-}
-
-const VocabTable = ({
-  data,
-}: {
-  data: DataType[];
-}) => {
+const VocabTable = () => {
+  const { searchResults } = useStore($store);
   const [editingKey, setEditingKey] = useState(0);
 
   const columns = createColumns({ editingKey });
@@ -30,7 +16,7 @@ const VocabTable = ({
   return (
     <Table
       columns={columns}
-      dataSource={data}
+      dataSource={searchResults}
       rowKey={(record: DataType) => record.id}
     />
   );

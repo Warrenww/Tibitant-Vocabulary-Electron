@@ -14,24 +14,23 @@ import { TriggerButton } from './styles';
 import Tibetan from '../Tibetan';
 import PosSelect from './PosSelect';
 import FormInputWithPreview from './FormInputWithPreview';
-import { createVocab } from '../API';
 import { CreateVocabDto } from '../../Utils/interface';
+import { useStore } from 'effector-react';
+import { $store, createFx } from '../effector';
 
-const SubmitModal = ({
-  initialTibetan,
-}: {
-  initialTibetan?: string;
-}) => {
+
+const SubmitModal = () => {
+  const { searching } = useStore($store);
   const [form] = Form.useForm<CreateVocabDto>();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (initialTibetan) {
+    if (searching) {
       form.setFieldsValue({
-        tibetan: initialTibetan,
+        tibetan: searching,
       });
     }
-  }, [initialTibetan]);
+  }, [searching, visible]);
 
   const toggleVisible = () => setVisible(!visible);
 
@@ -42,7 +41,7 @@ const SubmitModal = ({
 
   const handleSubmit = async () => {
     const rows = await form.validateFields();
-    await createVocab(rows);
+    await createFx(rows);
     setVisible(false);
     form.resetFields();
   };
@@ -71,7 +70,7 @@ const SubmitModal = ({
           <FormInputWithPreview
             label="Tibetan"
             name="tibetan"
-            tibetanValue={initialTibetan}
+            tibetanValue={searching}
             required
           />
           <PosSelect />
