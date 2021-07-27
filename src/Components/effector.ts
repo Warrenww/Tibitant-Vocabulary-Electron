@@ -6,12 +6,14 @@ import {
 import {
   search,
   createVocab,
+  getVocabById,
 } from './API';
+import uniqueObject from '../Utils/uniqueObject';
 
-export interface DataType {
-  future: number | null;
+export interface DataType extends Record<string, unknown> {
   id: number;
-  imperative: boolean | null;
+  future: number | null;
+  imperative: number | null;
   link: number | null;
   page: number | null;
   part_of_speech_id: number;
@@ -20,6 +22,7 @@ export interface DataType {
   translation: string;
   vocabulary: string;
   vocabulary_id: string;
+  hidden?: boolean;
 }
 
 interface StoreType {
@@ -48,11 +51,17 @@ $store.on(setSearching, (state, keyword: string) => {
 export const searchFx = createEffect(search);
 $store.on(searchFx.doneData, (state, result) => ({
   ...state,
-  searchResults: result,
+  searchResults: uniqueObject(result, 'id'),
 }));
 
 export const createFx = createEffect(createVocab);
 $store.on(createFx.doneData, (state, results) => ({
   ...state,
-  searchResults: results,
+  searchResults: uniqueObject(results, 'id'),
+}));
+
+export const loadLinkVocabFx = createEffect(getVocabById);
+$store.on(loadLinkVocabFx.doneData, (state, results) => ({
+  ...state,
+  searchResults: uniqueObject([...results, ...state.searchResults], 'id'),
 }));

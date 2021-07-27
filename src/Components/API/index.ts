@@ -19,3 +19,9 @@ export const createVocab = async (data: CreateVocabDto) => {
   const result = await socket.on('insertResult');
   return (result as DataType[]);
 }
+
+export const getVocabById = async (id: number) => {
+  socket.send('search', { id });
+  const result = await socket.on('searchResult');
+  return (result as DataType[]);
+}

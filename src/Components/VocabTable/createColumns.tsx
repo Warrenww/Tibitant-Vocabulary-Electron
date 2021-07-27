@@ -11,7 +11,10 @@ import { TibetanText } from '../Tibetan/styles';
 import { parser } from '../../Utils/Tibetan';
 import PosSelect from '../SubmitModal/PosSelect';
 import Tibetan from '../Tibetan';
-import { DataType } from '../effector';
+import {
+  DataType,
+  loadLinkVocabFx,
+} from '../effector';
 
 const createColumns = ({
   editingKey,
@@ -76,6 +79,7 @@ const createColumns = ({
                 type="text"
                 shape="circle"
                 onClick={() => {
+                  loadLinkVocabFx(record.link);
                   // setDisplayDataType(data.filter(x => x.vocabulary_id === record.link));
                   // setShowBookmark(true);
                 }}
