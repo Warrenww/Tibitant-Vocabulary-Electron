@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 
 export const AppContainer = styled.div`
   background-color: #282c34;
@@ -12,6 +12,12 @@ export const AppContainer = styled.div`
   color: white;
   text-align: center;
   justify-content: flex-start;
+  height: 100vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Container = styled.div`
@@ -46,5 +52,18 @@ export const SettingForm = styled(Form)<&{
 
   & > .ant-form-item {
     margin-bottom: 12px;
+  }
+`;
+
+export const TriggerButton = styled(Button)<{ $index: number }>`
+  position: fixed;
+  bottom: ${({ $index }) => $index * 4 + 2}em;
+  right: 2em;
+  width: 3em;
+  height: 3em;
+
+  & svg {
+    width: 1.8em;
+    height: 1.8em;
   }
 `;

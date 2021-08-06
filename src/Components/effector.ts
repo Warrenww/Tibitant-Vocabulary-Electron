@@ -28,11 +28,13 @@ export interface DataType extends Record<string, unknown> {
 interface StoreType {
   searching: string,
   searchResults: DataType[],
+  bookmarks: DataType[],
 }
 
 export const $store = createStore<StoreType>({
   searching: '',
   searchResults: [],
+  bookmarks: [],
 });
 
 export const setSearching = createEvent<string>();
@@ -64,4 +66,16 @@ export const loadLinkVocabFx = createEffect(getVocabById);
 $store.on(loadLinkVocabFx.doneData, (state, results) => ({
   ...state,
   searchResults: uniqueObject([...results, ...state.searchResults], 'id'),
+}));
+
+export const addToBookMark = createEvent<DataType>();
+$store.on(addToBookMark, (state, vocab) => ({
+  ...state,
+  bookmarks: [...state.bookmarks, vocab],
+}));
+
+export const removeFromBookMark = createEvent<string>();
+$store.on(removeFromBookMark, (state, vocabId) => ({
+  ...state,
+  bookmarks: state.bookmarks.filter((x) => x.vocabulary_id !== vocabId),
 }));

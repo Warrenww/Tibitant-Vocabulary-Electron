@@ -10,7 +10,7 @@ import {
   Radio,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { TriggerButton } from './styles';
+import { TriggerButton } from '../styles';
 import Tibetan from '../Tibetan';
 import PosSelect from './PosSelect';
 import FormInputWithPreview from './FormInputWithPreview';
@@ -53,6 +53,7 @@ const SubmitModal = () => {
         type="primary"
         shape="circle"
         onClick={toggleVisible}
+        $index={0}
       />
       <Modal
         visible={visible}

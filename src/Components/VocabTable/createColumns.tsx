@@ -15,6 +15,7 @@ import {
   DataType,
   loadLinkVocabFx,
 } from '../effector';
+import ActionArea from './ActionArea';
 
 const createColumns = ({
   editingKey,
@@ -104,24 +105,16 @@ const createColumns = ({
           : (page || '-'),
         width: 120,
       },
-      // {
-      //   title: 'Action',
-      //   key: 'action',
-      //   render: (text, record) => (
-      //     <ActionArea
-      //       text={text}
-      //       record={record}
-      //       storage={storage}
-      //       setStorage={setStorage}
-      //       onDelete={onDelete}
-      //       editingKey={editingKey}
-      //       setEditingKey={setEditingKey}
-      //       form={form}
-      //       onUpdate={onUpdate}
-      //     />
-      //   ),
-      //   width: 200,
-      // },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (_value: any, record: DataType) => (
+          <ActionArea
+            vocab={record}
+          />
+        ),
+        width: 200,
+      },
     ];
 };
 
