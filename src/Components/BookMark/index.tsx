@@ -5,8 +5,10 @@ import {
   Typography,
   Button,
   Divider,
+  Badge,
+  Tooltip,
 } from 'antd';
-import { BookFilled, DeleteFilled } from '@ant-design/icons';
+import { BookOutlined, DeleteFilled } from '@ant-design/icons';
 import { TriggerButton } from '../styles';
 import { useStore } from 'effector-react';
 import { $store, removeFromBookMark } from '../effector';
@@ -23,13 +25,18 @@ export default function BookMark () {
 
   return (
     <>
-      <TriggerButton
-        $index={1}
-        type="primary"
-        shape="circle"
-        icon={<BookFilled />}
-        onClick={toggleShow}
-      />
+      <Tooltip title="書籤" placement="left">
+        <TriggerButton
+          $index={1}
+          type="primary"
+          shape="circle"
+          onClick={toggleShow}
+        >
+          <Badge count={bookmarks.length}>
+            <BookOutlined />
+          </Badge>
+        </TriggerButton>
+      </Tooltip>
       <Drawer
         visible={show}
         onClose={() => setShow(false)}

@@ -13,7 +13,7 @@ export interface VocabularyInfo {
   future: number | null;
   imperative: number | null;
   link: number | null;
-  translation: string;  
+  translation: string;
 }
 
 interface VocabWithPage {
@@ -30,4 +30,9 @@ export interface CreateVocabDto {
   past?: VocabWithPage;
   future?: VocabWithPage;
   imperative?: VocabWithPage;
+}
+
+export interface EditVocabDto extends Pick<CreateVocabDto, 'translation' | 'page' | 'part_of_speech_id'> {
+  id: number;
+  vocabulary_id: number;
 }

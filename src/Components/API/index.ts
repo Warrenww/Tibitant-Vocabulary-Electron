@@ -1,5 +1,8 @@
 import socket from './socket';
-import { CreateVocabDto } from '../../Utils/interface';
+import {
+  CreateVocabDto,
+  EditVocabDto,
+} from '../../Utils/interface';
 import { DataType } from '../effector';
 
 export const getData = async (page: number) => {
@@ -16,6 +19,12 @@ export const search = async (keyword: string) => {
 
 export const createVocab = async (data: CreateVocabDto) => {
   socket.send('create', { data });
+  const result = await socket.on('insertResult');
+  return (result as DataType[]);
+}
+
+export const editVocab = async (data: EditVocabDto) => {
+  socket.send('edit', { data });
   const result = await socket.on('insertResult');
   return (result as DataType[]);
 }

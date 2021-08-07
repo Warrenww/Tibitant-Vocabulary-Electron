@@ -6,6 +6,7 @@ import {
 import {
   search,
   createVocab,
+  editVocab,
   getVocabById,
 } from './API';
 import uniqueObject from '../Utils/uniqueObject';
@@ -61,6 +62,15 @@ $store.on(createFx.doneData, (state, results) => ({
   ...state,
   searchResults: uniqueObject(results, 'id'),
 }));
+
+export const editFx = createEffect(editVocab);
+$store.on(editFx.doneData, (state, results) => {
+  const tmp = state.searchResults.filter((x) => !results.find((y) => y.id === x.id));
+  return ({
+    ...state,
+    searchResults: uniqueObject([...tmp, ...results], 'id'),
+  })
+});
 
 export const loadLinkVocabFx = createEffect(getVocabById);
 $store.on(loadLinkVocabFx.doneData, (state, results) => ({

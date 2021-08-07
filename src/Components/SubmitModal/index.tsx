@@ -8,6 +8,7 @@ import {
   Input,
   InputNumber,
   Radio,
+  Tooltip,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { TriggerButton } from '../styles';
@@ -48,13 +49,15 @@ const SubmitModal = () => {
 
   return (
     <>
-      <TriggerButton
-        icon={<PlusOutlined size={30}/>}
-        type="primary"
-        shape="circle"
-        onClick={toggleVisible}
-        $index={0}
-      />
+      <Tooltip title="新增單字" placement="left">
+        <TriggerButton
+          icon={<PlusOutlined size={30}/>}
+          type="primary"
+          shape="circle"
+          onClick={toggleVisible}
+          $index={0}
+        />
+      </Tooltip>
       <Modal
         visible={visible}
         onOk={handleSubmit}

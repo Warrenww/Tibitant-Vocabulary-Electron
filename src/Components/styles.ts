@@ -61,6 +61,7 @@ export const TriggerButton = styled(Button)<{ $index: number }>`
   right: 2em;
   width: 3em;
   height: 3em;
+  font-size: 14px;
 
   & svg {
     width: 1.8em;

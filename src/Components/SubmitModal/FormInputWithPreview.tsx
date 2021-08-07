@@ -30,27 +30,25 @@ const FormInputWithPreview = ({
   }, [tibetanValue]);
 
   return (
-    <>
-      <Form.Item
-        label={label}
-        name={name}
-        rules={[{ required: required ?? false }]}
-        help={(
-          <Tibetan
-            source={value ?? ''}
-            preview
-            small
-            marginHorizental={10}
-            marginVertical={10}
-          />
-        )}
-      >
-        <Input
-          onChange={handleChange}
-          allowClear
+    <Form.Item
+      label={label}
+      name={name}
+      rules={[{ required: required ?? false }]}
+      help={(
+        <Tibetan
+          source={value ?? ''}
+          preview
+          small
+          marginHorizental={10}
+          marginVertical={10}
         />
-      </Form.Item>
-    </>
+      )}
+    >
+      <Input
+        onChange={handleChange}
+        allowClear
+      />
+    </Form.Item>
   );
 };
 

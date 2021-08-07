@@ -6,9 +6,13 @@ import {
 
 const { Option } = Select;
 
-const PosSelect = () => (
+const PosSelect = ({
+  showLabel,
+}: {
+  showLabel?: boolean;
+}) => (
   <Form.Item
-    label="POS"
+    label={(showLabel ?? true) ? 'POS' : ''}
     name="part_of_speech_id"
     tooltip="Part of Speech (詞性)"
   >

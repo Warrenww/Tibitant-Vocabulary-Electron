@@ -19,8 +19,12 @@ import ActionArea from './ActionArea';
 
 const createColumns = ({
   editingKey,
+  setEditingKey,
+  submitEdit,
 }: {
   editingKey: number;
+  setEditingKey: (id: number) => void;
+  submitEdit: () => void;
 }) => {
   const isEditing = (record: DataType) => record.id === editingKey;
 
@@ -37,9 +41,7 @@ const createColumns = ({
         dataIndex: 'part_of_speech_id',
         key: 'part_of_speech_id',
         render: (idx: number, record: DataType) => isEditing(record) ? (
-          <Form.Item name="part_of_speech_id">
-            <PosSelect />
-          </Form.Item>
+          <PosSelect showLabel={false}/>
         ) : (
           <>
             {['-', 'V.', 'N.', 'Adj.', 'Adv.'][idx] || '-'}
@@ -111,6 +113,11 @@ const createColumns = ({
         render: (_value: any, record: DataType) => (
           <ActionArea
             vocab={record}
+            isEditing={isEditing(record)}
+            editingKey={editingKey}
+            handleEdit={() => setEditingKey(record.id)}
+            handleCancel={() => setEditingKey(null)}
+            submitEdit={submitEdit}
           />
         ),
         width: 200,
