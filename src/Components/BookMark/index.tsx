@@ -7,11 +7,19 @@ import {
   Divider,
   Badge,
   Tooltip,
+  Popconfirm,
 } from 'antd';
-import { BookOutlined, DeleteFilled } from '@ant-design/icons';
+import {
+  BookOutlined,
+  DeleteFilled,
+} from '@ant-design/icons';
 import { TriggerButton } from '../styles';
 import { useStore } from 'effector-react';
-import { $store, removeFromBookMark } from '../effector';
+import {
+  $store,
+  removeFromBookMark,
+  clearBookMark,
+} from '../effector';
 import { TibetanText } from '../Tibetan/styles';
 import { parser } from '../../Utils/Tibetan';
 
@@ -40,8 +48,24 @@ export default function BookMark () {
       <Drawer
         visible={show}
         onClose={() => setShow(false)}
+        footer={(
+          <Popconfirm
+            title="Are you sure to clear all bookmarks?"
+            onConfirm={() => {
+              clearBookMark();
+              setShow(false);
+            }}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>
+              <DeleteFilled />
+              Clear All
+            </Button>
+          </Popconfirm>
+        )}
         closeIcon={<></>}
-        width={400}
+        width={320}
       >
         <List
           dataSource={bookmarks}

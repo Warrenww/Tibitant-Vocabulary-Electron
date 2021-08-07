@@ -89,3 +89,6 @@ $store.on(removeFromBookMark, (state, vocabId) => ({
   ...state,
   bookmarks: state.bookmarks.filter((x) => x.vocabulary_id !== vocabId),
 }));
+
+export const clearBookMark = createEvent();
+$store.on(clearBookMark, (state) => ({ ...state, bookmarks: [] }));
