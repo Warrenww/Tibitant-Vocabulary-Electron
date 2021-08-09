@@ -6,6 +6,7 @@ import Search from './Search';
 import VocabTable from './VocabTable';
 import SubmitModal from './SubmitModal';
 import BookMark from './BookMark';
+import Navigationbar from './Navigationbar';
 import { DataType } from './effector';
 import socket from './API/socket';
 import { setSearching } from './effector';
@@ -21,6 +22,7 @@ const App = () => {
 
   return (
     <AppContainer>
+      <Navigationbar />
       <Search/>
       <SubmitModal />
       <VocabTable />

@@ -2,6 +2,7 @@ import socket from './socket';
 import {
   CreateVocabDto,
   EditVocabDto,
+  SystemCommand,
 } from '../../Utils/interface';
 import { DataType } from '../effector';
 
@@ -34,3 +35,5 @@ export const getVocabById = async (id: number) => {
   const result = await socket.on('searchResult');
   return (result as DataType[]);
 }
+
+export const systemCall = (command: SystemCommand): void => socket.send('SystemCommand', command);

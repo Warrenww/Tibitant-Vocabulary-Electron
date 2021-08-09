@@ -36,3 +36,5 @@ export interface EditVocabDto extends Pick<CreateVocabDto, 'translation' | 'page
   id: number;
   vocabulary_id: number;
 }
+
+export type SystemCommand = 'close' | 'maximize' | 'minimize';

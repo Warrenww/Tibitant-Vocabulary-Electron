@@ -4,6 +4,7 @@ import sqlite3 from 'sqlite3';
 import {
   CreateVocabDto,
   EditVocabDto,
+  SystemCommand,
 } from './Utils/interface';
 import { DataType } from './Components/effector';
 import Service from './database';
@@ -18,11 +19,13 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-const createWindow = (): void => {
+const createWindow = (): BrowserWindow => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+    show: false,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -31,18 +34,44 @@ const createWindow = (): void => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.maximize();
   mainWindow.setMenuBarVisibility(false);
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+    mainWindow.maximize();
+  });
 
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
+  return mainWindow;
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  const mainWindow = createWindow();
+  ipcMain.on('SystemCommand', (_event, command: SystemCommand) => {
+    switch (command) {
+      case 'close':
+        mainWindow.destroy();
+        break;
+      case 'maximize':
+          if (!mainWindow.isMaximized()) {
+             mainWindow.maximize();
+         } else {
+             mainWindow.unmaximize();
+         }
+        break;
+      case 'minimize':
+        mainWindow.minimize();
+        break
+      default:
+        break;
+    }
+  })
+
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
