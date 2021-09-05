@@ -18,12 +18,22 @@ import FormInputWithPreview from './FormInputWithPreview';
 import { CreateVocabDto } from '../../Utils/interface';
 import { useStore } from 'effector-react';
 import { $store, createFx } from '../effector';
-
+import { bind, unbind } from 'mousetrap';
 
 const SubmitModal = () => {
   const { searching } = useStore($store);
   const [form] = Form.useForm<CreateVocabDto>();
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    bind('mod+n', () => {
+      setVisible(true);
+    });
+
+    return () => {
+      unbind('mod+n');
+    }
+  }, []);
 
   useEffect(() => {
     if (searching) {

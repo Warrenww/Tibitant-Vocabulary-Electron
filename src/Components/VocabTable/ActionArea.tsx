@@ -12,6 +12,7 @@ import {
   EditFilled,
   SaveOutlined,
   CloseCircleFilled,
+  DeleteFilled,
 } from '@ant-design/icons';
 import { useStore } from 'effector-react';
 import {
@@ -83,6 +84,15 @@ export default function ActionArea ({
           shape="circle"
           disabled={editingKey && vocab.id !== editingKey}
           icon={<EditFilled />}
+        />
+      </Tooltip>
+      <Tooltip title="Dekete">
+        <Button
+          onClick={() => {}}
+          type="default"
+          danger
+          shape="circle"
+          icon={<DeleteFilled />}
         />
       </Tooltip>
     </Actions>

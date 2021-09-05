@@ -40,7 +40,6 @@ const createWindow = (): BrowserWindow => {
     mainWindow.maximize();
   });
 
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
   return mainWindow;

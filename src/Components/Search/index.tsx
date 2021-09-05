@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Container } from './styles';
 import Tibetan from '../Tibetan';
-import { useStore } from 'effector-react';
-import { $store, setSearching, searchFx } from '../effector';
+import { setSearching, searchFx } from '../effector';
 
 const Search = () => {
-  const { searching } = useStore($store);
+  const [value, setValue] = useState('');
+  const searchTimeOut = useRef<NodeJS.Timeout>(null);
+
+  useEffect(() => {
+    const inputRef = document.getElementById('searchInput');
+    if (inputRef) inputRef.classList.add('mousetrap');
+  }, []);
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const keyword = e.target.value;
-    setSearching(keyword);
-    if(keyword) searchFx(keyword);
+    setValue(keyword);
+
+    if (searchTimeOut.current !== undefined) {
+      clearTimeout(searchTimeOut.current);
+    }
+    searchTimeOut.current = setTimeout(() => {
+      if (keyword) searchFx(keyword);
+      setSearching(keyword);
+    }, 350);
+
   };
 
   return (
     <Container>
       <Input
-        value={searching}
+        value={value}
         onChange={handleChange}
         prefix={<SearchOutlined />}
-        suffix={<Tibetan source={searching} preview small/>}
+        suffix={<Tibetan source={value} preview small/>}
         allowClear
+        id="searchInput"
       />
     </Container>
   );
