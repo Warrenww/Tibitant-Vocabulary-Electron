@@ -194,3 +194,8 @@ ipcMain.on('edit', async (event, arg: { data: EditVocabDto; }) => {
 
   event.reply('insertResult', result);
 });
+
+ipcMain.on('delete', async (event, vocabInfoId: number) => {
+  const result = await DBService.DeleteVocab(vocabInfoId);
+  event.reply('deleteResult', result);
+});

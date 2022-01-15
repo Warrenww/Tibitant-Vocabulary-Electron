@@ -202,6 +202,12 @@ export default class Tibetan {
 
   toString() {
     if (!this.valid || this.source === '') return '';
+    if(!this.main) {
+      return (
+        String.fromCharCode(Number("0xf" + Map['a'].base)) +
+        (this.vowel === 'a' ? '' : String.fromCharCode(Number("0xf" + Map[this.vowel].base)))
+      );
+    }
     const temp = [this.up, this.main, this.down]
       .filter(x => x)
       .reduce((acc, curr, idx) => acc += (curr in Map) ? String.fromCharCode(Number("0xf" + Map[curr][idx ? 'lower' : 'base'])) : '', '');

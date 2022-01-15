@@ -3,6 +3,7 @@ import { DataType } from './Components/effector';
 import {
   Vocabulary,
   EditVocabDto,
+  VocabularyInfo,
 } from './Utils/interface';
 
 const sqlite = sqlite3.verbose();
@@ -41,7 +42,7 @@ export default class Service {
   }
 
   getVocabById (id: number) {
-    return new Promise((resolve) => {
+    return new Promise<any[]>((resolve) => {
       this.database.all(`
         select * from vocabulary join vocabulary_info as info
         on info.vocabulary_id = vocabulary.id
@@ -51,6 +52,23 @@ export default class Service {
         else resolve(rows);
       })
     });
+  }
+
+  getVocabInfoById (id: number) {
+    return new Promise<VocabularyInfo & {
+      vocId: number;
+    }>((resolve) => {
+      this.database.all(`
+        select info.*, vocabulary.id as vocId
+        from vocabulary_info as info
+        join vocabulary
+        on info.vocabulary_id = vocabulary.id
+        where info.id = ${id}
+      `, (err, rows) =>{
+        if (err) console.log(err);
+        else resolve(rows[0]);
+      })
+    })
   }
 
   getVocabFromTibetan (tibetan: string) {
@@ -117,7 +135,7 @@ export default class Service {
       ...data,
       vocabulary_id: vocabId,
     };
-    const validKeys = Object.keys(insertData).filter((key) => !!insertData[key]);
+    const validKeys = Object.keys(insertData).filter((key) => (insertData[key] !== undefined && insertData[key]  !== null));
     const validValues = validKeys.map((key) => insertData[key]);
 
     const sql = `
@@ -132,5 +150,23 @@ export default class Service {
       this.database.all(sql, (err) => err ? console.log(err) : resolve());
     });
   };
+
+  async DeleteVocab (id: number) {
+    const exist = await this.getVocabInfoById(id);
+
+    if (!exist) return;
+    const { vocId, id: infoId } = exist;
+
+    await (() => new Promise<void>((resolve) => {
+      this.database.all(`Delete from vocabulary_info where id=${infoId}`, () => resolve())
+    }))();
+
+    const vocabs = await this.getVocabById(vocId);
+    if (vocabs.length === 0) {
+      this.database.all(`Delete from vocabulary where id=${vocId}`);
+    }
+
+    return infoId;
+  }
 
 }

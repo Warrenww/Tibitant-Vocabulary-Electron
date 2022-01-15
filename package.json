@@ -94,6 +94,7 @@
   },
   "dependencies": {
     "antd": "^4.16.7",
+    "axios": "^0.24.0",
     "effector": "^21.8.12",
     "effector-react": "^21.3.3",
     "electron-squirrel-startup": "^1.0.0",

@@ -13,6 +13,7 @@ import {
   SaveOutlined,
   CloseCircleFilled,
   DeleteFilled,
+  SearchOutlined,
 } from '@ant-design/icons';
 import { useStore } from 'effector-react';
 import {
@@ -20,6 +21,7 @@ import {
   DataType,
   addToBookMark,
   removeFromBookMark,
+  deleteFx,
 } from '../effector';
 import { Actions } from './styles';
 
@@ -86,13 +88,26 @@ export default function ActionArea ({
           icon={<EditFilled />}
         />
       </Tooltip>
-      <Tooltip title="Dekete">
+      <Tooltip title="Delete">
+        <Popconfirm
+          title="Are you sure to delete this term?"
+          onConfirm={() => deleteFx(vocab.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button
+            type="default"
+            danger
+            shape="circle"
+            icon={<DeleteFilled />}
+          />
+        </Popconfirm>
+      </Tooltip>
+      <Tooltip title="Search online">
         <Button
-          onClick={() => {}}
           type="default"
-          danger
           shape="circle"
-          icon={<DeleteFilled />}
+          icon={<SearchOutlined />}
         />
       </Tooltip>
     </Actions>
