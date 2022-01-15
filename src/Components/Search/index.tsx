@@ -1,9 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Input } from 'antd';
+import {
+  Input,
+  Button,
+} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Container } from './styles';
 import Tibetan from '../Tibetan';
-import { setSearching, searchFx } from '../effector';
+import {
+  setSearching,
+  searchFx,
+  onlineSearchFx,
+} from '../effector';
 
 const Search = () => {
   const [value, setValue] = useState('');
@@ -38,6 +45,11 @@ const Search = () => {
         allowClear
         id="searchInput"
       />
+      <Button
+        onClick={() => onlineSearchFx(value)}
+      >
+        Search Online
+      </Button>
     </Container>
   );
 };

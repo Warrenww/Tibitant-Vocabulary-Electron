@@ -9,6 +9,7 @@ import {
   editVocab,
   getVocabById,
   deleteVocab,
+  onlineSearching,
 } from './API';
 import uniqueObject from '../Utils/uniqueObject';
 
@@ -31,12 +32,22 @@ interface StoreType {
   searching: string,
   searchResults: DataType[],
   bookmarks: DataType[],
+  onlineSearching: {
+    searchWord: string;
+    visible: boolean;
+    results: Record<string, string>;
+  }
 }
 
 export const $store = createStore<StoreType>({
   searching: '',
   searchResults: [],
   bookmarks: [],
+  onlineSearching: {
+    visible: false,
+    results: {},
+    searchWord: '',
+  }
 });
 
 export const setSearching = createEvent<string>();
@@ -101,3 +112,22 @@ $store.on(removeFromBookMark, (state, vocabId) => ({
 
 export const clearBookMark = createEvent();
 $store.on(clearBookMark, (state) => ({ ...state, bookmarks: [] }));
+
+export const hideOnlineSearchingModal = createEvent();
+$store.on(hideOnlineSearchingModal, ({ onlineSearching, ...rest }) => ({
+  ...rest,
+  onlineSearching: {
+    ...onlineSearching,
+    visible: false,
+  },
+}));
+
+export const onlineSearchFx  = createEffect({ handler: onlineSearching });
+$store.on(onlineSearchFx.done, ({ onlineSearching, ...rest }, { params, result }) => ({
+  ...rest,
+  onlineSearching: {
+    visible: true,
+    results: result,
+    searchWord: params,
+  },
+}));

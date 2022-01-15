@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import sqlite3 from 'sqlite3';
+import axios from 'axios';
+import https from 'https';
 import {
   CreateVocabDto,
   EditVocabDto,
@@ -199,3 +201,33 @@ ipcMain.on('delete', async (event, vocabInfoId: number) => {
   const result = await DBService.DeleteVocab(vocabInfoId);
   event.reply('deleteResult', result);
 });
+
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
+
+ipcMain.on('searchOnline', async (event, term) => {
+  const data = new URLSearchParams();
+  data.append("term", term.replace('.', ''));
+  data.append("lang", "tib");
+  data.append("dictionaries[]", "RangjungYeshe");
+  data.append("dictionaries[]", "Hopkins2015")
+
+  const { data: response } = await axios.post("https://dictionary.christian-steinert.de/dict.php", data, {
+    headers: {
+      "accept": "application/json, text/javascript, */*; q=0.01",
+      "accept-language": "en-US,en;q=0.9,zh-TW;q=0.8,zh;q=0.7",
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "x-requested-with": "XMLHttpRequest",
+      "Referer": "https://dictionary.christian-steinert.de/",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Access-Control-Allow-Origin": "*",
+    },
+    httpsAgent: agent,
+  });
+
+  event.reply('searchOnline', response);
+})

@@ -7,6 +7,7 @@ import VocabTable from './VocabTable';
 import SubmitModal from './SubmitModal';
 import BookMark from './BookMark';
 import Navigationbar from './Navigationbar';
+import OnlineSearchModal from './OnlineSearchModal';
 import { DataType } from './effector';
 import socket from './API/socket';
 import { setSearching } from './effector';
@@ -27,6 +28,7 @@ const App = () => {
       <SubmitModal />
       <VocabTable />
       <BookMark />
+      <OnlineSearchModal />
     </AppContainer>
   );
 }

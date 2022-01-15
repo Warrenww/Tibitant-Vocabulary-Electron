@@ -22,6 +22,7 @@ import {
   addToBookMark,
   removeFromBookMark,
   deleteFx,
+  onlineSearchFx,
 } from '../effector';
 import { Actions } from './styles';
 
@@ -106,6 +107,7 @@ export default function ActionArea ({
       <Tooltip title="Search online">
         <Button
           type="default"
+          onClick={() => onlineSearchFx(vocab.vocabulary)}
           shape="circle"
           icon={<SearchOutlined />}
         />
